@@ -22,6 +22,10 @@ var/
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
+scripts/include
+scripts/bin
+scripts/lib
+scripts/pyvenv.cfg
 *.egg-info/
 .installed.cfg
 *.egg
