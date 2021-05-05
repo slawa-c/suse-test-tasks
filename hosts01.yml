@@ -1,0 +1,53 @@
+---
+# list of servers for test task
+
+dbservers:
+  hosts:
+    server1:
+      ansible_host: 192.168.1.79
+
+dbservers_ic:
+  hosts:
+    server1ic:
+      ansible_host: 10.1.1.51
+
+backendservers:
+  hosts:
+    server2:
+      ansible_host: 192.168.1.80
+
+backendservers_ic:
+  hosts:
+    server2ic:
+      ansible_host: 10.1.1.52
+
+appservers:
+  hosts:
+    server3:
+      ansible_host: 192.168.1.81
+
+appservers_ic:
+  hosts:
+    server3ic:
+      ansible_host: 10.1.1.53
+
+# group of servers with access ip adresses
+slessrv:
+  children:
+    dbservers:
+    backendservers:
+    appservers:
+  vars:
+    ansible_user: safeadmin
+
+# group of servers with internal ip adresses
+slessrv_ic:
+  children:
+    dbservers_ic:
+    backendservers_ic:
+    appservers_ic:
+  vars:
+    ansible_user: safeadmin
+
+
+  
