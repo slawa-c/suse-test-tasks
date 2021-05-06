@@ -1,0 +1,9 @@
+---
+# create_user playbook
+
+- hosts: server3
+  become: True
+  user: safeadmin
+
+  roles:
+    - create_user
