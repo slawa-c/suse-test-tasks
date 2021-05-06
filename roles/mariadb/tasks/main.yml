@@ -27,3 +27,15 @@
     user: root
     host: "{{ ansible_fqdn }}"
     state: absent
+# copy files to target directory
+- name: This command copy backup sql file
+  copy:
+    src: "{{ role_path }}/files/backup.sql"
+    dest: backup.sql
+# You can also use the 'cmd' parameter instead of free form format.
+- name: This command will ls cat 
+  ansible.builtin.shell:
+    cmd: ls -al
+  register: command_output
+- name: Print to console
+  debug: msg="{{command_output.stdout}}"

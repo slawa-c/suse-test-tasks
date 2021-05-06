@@ -16,5 +16,14 @@
     - vars_vault.yml
   roles:  
     - role: mariadb
+#    - role: importBackupToDB
+- name:  Copy and change xml file on DB Server SLES15
+  hosts: dbservers
+  become: false
+  vars_files:
+    - vars_vault.yml
+  roles:
+    - role: xmlfilecopy
+    
 
 

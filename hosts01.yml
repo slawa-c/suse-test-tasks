@@ -4,32 +4,32 @@
 dbservers:
   hosts:
     server1:
-      ansible_host: 192.168.1.79
+      ansible_ssh_host: 192.168.1.79
 
 dbservers_ic:
   hosts:
     server1ic:
-      ansible_host: 10.1.1.51
+      ansible_ssh_host: 10.1.1.51
 
 backendservers:
   hosts:
     server2:
-      ansible_host: 192.168.1.80
+      ansible_ssh_host: 192.168.1.80
 
 backendservers_ic:
   hosts:
     server2ic:
-      ansible_host: 10.1.1.52
+      ansible_ssh_host: 10.1.1.52
 
 appservers:
   hosts:
     server3:
-      ansible_host: 192.168.1.81
+      ansible_ssh_host: 192.168.1.81
 
 appservers_ic:
   hosts:
     server3ic:
-      ansible_host: 10.1.1.53
+      ansible_ssh_host: 10.1.1.53
 
 # group of servers with access ip adresses
 slessrv:
@@ -39,6 +39,8 @@ slessrv:
     appservers:
   vars:
     ansible_user: safeadmin
+    ansible_ssh_user: safeadmin
+    ansible_python_interpreter: /usr/bin/python3
 
 # group of servers with internal ip adresses
 slessrv_ic:
@@ -48,6 +50,8 @@ slessrv_ic:
     appservers_ic:
   vars:
     ansible_user: safeadmin
+    ansible_ssh_user: safeadmin
+    ansible_python_interpreter: /usr/bin/python3
 
 # group of all servers
 sles-test-tasks:

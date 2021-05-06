@@ -1,9 +1,9 @@
 ---
-# create_user playbook
-
+# createuser playbook
 - hosts: server3
   become: True
-  user: safeadmin
-
+  #user: safeadmin
+  vars_files:
+    - vars_vault.yml
   roles:
-    - create_user
+    - createuser

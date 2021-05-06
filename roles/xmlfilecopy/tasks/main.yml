@@ -1,0 +1,20 @@
+---
+# tasks file for roles/xmlfilecopy
+# copy files to target directory
+- name: This command copy kvm template file
+  copy:
+    src: "{{ role_path }}/files/vm-db01.xml"
+    dest: vm-db01.xml
+# You can also use the 'cmd' parameter instead of free form format.
+- name: This command will change xml files 
+  ansible.builtin.shell:
+    cmd: xmlstarlet ed -L --insert "/domain/devices/disk" --type attr -n cache --value none vm-db01.xml
+- name: This command will change xml files 
+  ansible.builtin.shell:    
+    cmd: xmlstarlet ed -L --insert "/domain/devices/disk" --type attr -n io --value native vm-db01.xml
+- name: This command will cat xml files 
+  ansible.builtin.shell:    
+    cmd: cat vm-db01.xml
+  register: command_output
+- name: Print to console
+  debug: msg="the value of vm-db01.xml is {{command_output.stdout}}"
