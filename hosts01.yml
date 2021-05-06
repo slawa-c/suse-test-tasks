@@ -49,5 +49,11 @@ slessrv_ic:
   vars:
     ansible_user: safeadmin
 
+# group of all servers
+sles-test-tasks:
+  children:
+    slessrv:
+    slessrv_ic:
+
 
   
