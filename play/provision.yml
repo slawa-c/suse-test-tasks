@@ -1,0 +1,12 @@
+---
+# -- Provision servers on SLES ---
+- name: Provison Server SLES15
+  hosts: server3
+  become: true
+  vars_files:
+    - vars_vault.yml
+
+  roles:
+    - role: common
+#    - role: geerlingguy.mysql
+

@@ -131,5 +131,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-.code-workspace
+*.code-workspace
 suse-test-tasks.code-workspace
+*decrypt*
+*passw*
+*vault*
