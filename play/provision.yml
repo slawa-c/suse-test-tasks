@@ -1,12 +1,20 @@
 ---
-# -- Provision servers on SLES ---
-- name: Provison Server SLES15
-  hosts: server3
+# -- Provision servers on SLES --
+- name: Provison all servers SLES15
+  hosts: slessrv
+  become: true
+  gather_facts: true
+  vars_files:
+    - vars_vault.yml
+  roles:
+    - role: common
+# -- Provision dbservers on SLES --
+- name:  Provision DB Server SLES15
+  hosts: dbservers
   become: true
   vars_files:
     - vars_vault.yml
+  roles:  
+    - role: mariadb
 
-  roles:
-    - role: common
-#    - role: geerlingguy.mysql
 
