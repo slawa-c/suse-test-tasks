@@ -33,6 +33,11 @@
     src: "{{ role_path }}/files/backup.sql"
     dest: backup.sql
 # You can also use the 'cmd' parameter instead of free form format.
+- name: This command will import backup data into DB 
+  ansible.builtin.shell:
+    cmd: ls -al
+  register: command_output
+# You can also use the 'cmd' parameter instead of free form format.
 - name: This command will ls cat 
   ansible.builtin.shell:
     cmd: ls -al

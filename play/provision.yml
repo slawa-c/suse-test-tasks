@@ -8,15 +8,8 @@
     - vars_vault.yml
   roles:
     - role: common
-# -- Provision dbservers on SLES --
-- name:  Provision DB Server SLES15
-  hosts: dbservers
-  become: true
-  vars_files:
-    - vars_vault.yml
-  roles:  
-    - role: mariadb
-#    - role: importBackupToDB
+    - role: createuser
+# Prepare KVM xml VM file
 - name:  Copy and change xml file on DB Server SLES15
   hosts: dbservers
   become: false
@@ -24,6 +17,18 @@
     - vars_vault.yml
   roles:
     - role: xmlfilecopy
+
+# -- Provision dbservers on SLES --
+- name:  Provision DB Server SLES15
+  hosts: dbservers
+  become: true
+  vars_files:
+    - vars_vault.yml
+  roles:  
+#    - role: mariadb
+    - role: mariadb-inst
+    - role: importBackupToDB
+
     
 
 
