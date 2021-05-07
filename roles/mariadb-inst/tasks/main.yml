@@ -1,0 +1,104 @@
+---
+# tasks file for roles/mariadb-inst
+- name: Install '{{ item }}'
+  community.general.zypper:
+    name: '{{ item }}'
+    state: present
+  loop:
+    - mariadb
+- name: start mariadb
+  service:
+    name: mariadb
+    enabled: true
+    state: started
+- name: set mysql root password
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    user: root
+    check_implicit_admin: true
+    password: "{{ mysql_root_password }}"
+    host: localhost
+- name: remove remote root
+  mysql_user:
+    check_implicit_admin: true
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    user: root
+    host: "{{ ansible_fqdn }}"
+    state: absent
+
+- name: Ensure root can login into MySQL localhost
+  shell: "mysql -e \"CREATE USER 'root'@'{{ item }}';\" -uroot -p'{{ mysql_root_password }}'"
+  with_items:
+    - localhost
+  ignore_errors: yes
+
+- name: Create the MySQL '{{ suse_admin_user }}' user
+  shell: "mysql -e \"CREATE USER '{{ suse_admin_user }}'@'{{ item }}' IDENTIFIED BY 
+         '{{ suse_admin_pass }}'; GRANT ALL PRIVILEGES ON *.* TO 
+         '{{ suse_admin_user }}'@'{{item}}' WITH GRANT OPTION;\" 
+         -uroot -p'{{ mysql_root_password }}'"
+  with_items:
+    - localhost
+
+- name: Adding user mysql to group users
+  user:
+    name: mysql
+    groups: users
+    append: yes
+
+- name: Generate MySQL server-id
+  shell: hostname -I | sed -e 's/ \+\([a-z0-9]\+\:\)\+[a-z0-9]\+//' | sed -e 's/ 
+         /\n/' | grep -v '^$' | tail -1 | awk -F. '{print $3 * 256 + $4}'
+  register: mysql_server_id
+  
+- name: Create /etc/my.cnf
+  template:
+    src: ../templates/mysql.cnf.j2
+    dest: /etc/my.cnf
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  
+- name: Copy root-my.cnf file
+  template:
+    src: ../templates/root-my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+  
+- name: Copy {{ suse_admin_user }}-my.cnf file
+  template:
+    src: ../templates/{{ suse_admin_user }}-my.cnf.j2
+    dest: /home/{{ suse_admin_user }}/.my.cnf
+    owner: '{{ suse_admin_user }}'
+    group: users
+    mode: 0600
+  
+- name: Restart the mariadb service
+  service:
+    name: mysql
+    state: restarted
+
+
+
+# copy files to target directory
+- name: This command copy backup sql file
+  copy:
+    src: "{{ role_path }}/files/backup.sql"
+    dest: backup.sql
+# You can also use the 'cmd' parameter instead of free form format.
+- name: This command will import backup data into DB 
+  ansible.builtin.shell:
+    cmd: ls -al
+  register: command_output
+# You can also use the 'cmd' parameter instead of free form format.
+- name: This command will ls cat 
+  ansible.builtin.shell:
+    cmd: ls -al
+  register: command_output
+- name: Print to console
+  debug: msg="{{command_output.stdout}}"
