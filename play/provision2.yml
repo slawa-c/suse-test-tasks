@@ -1,0 +1,12 @@
+---
+# -- Provision user servers on SLES --
+- name:  Copy and change xml file on DB Server SLES15
+  hosts: slessrv
+  become: true
+  vars_files:
+    - vars_vault.yml
+  roles:
+    - role: createuser
+    
+
+

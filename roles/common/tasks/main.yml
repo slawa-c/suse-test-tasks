@@ -25,3 +25,11 @@
     - vim
     - net-tools
     - xmlstarlet
+
+- name: Install required pip packages '{{ item }}'
+  ansible.builtin.pip:
+    name: '{{ item }}'
+    state: present
+  loop:
+    - PyMySQL
+  
