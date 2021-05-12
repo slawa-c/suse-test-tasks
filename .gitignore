@@ -135,6 +135,6 @@ dmypy.json
 suse-test-tasks.code-workspace
 *decrypt*
 *passw*
-*vault*
+# *vault*
 *.icloud
 .DS_Store
