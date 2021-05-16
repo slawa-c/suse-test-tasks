@@ -1,5 +1,7 @@
 [dbservers]
-server1        ansible_ssh_host=192.168.1.79    owner=test1
+# server1        ansible_ssh_host=192.168.1.79    owner=test1
+# orln-srv01        ansible_ssh_host=192.168.1.91    owner=test1
+ubnt-srv01        ansible_ssh_host=192.168.1.89    owner=test1
 
 [backendservers]
 server2        ansible_ssh_host=192.168.1.80    owner=test1
@@ -36,4 +38,7 @@ ansible_user=safeadmin
 ansible_ssh_user=safeadmin
 ansible_python_interpreter=/usr/bin/python3
 
+[dbservers:vars]
+ansible_user=slawa
+ansible_ssh_user=slawa
 
