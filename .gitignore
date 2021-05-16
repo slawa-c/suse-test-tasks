@@ -138,4 +138,7 @@ suse-test-tasks.code-workspace
 # *vault*
 *.icloud
 .DS_Store
+<<<<<<< HEAD
 *.DS_Store
+=======
+>>>>>>> 11bf8f2a1f6cc179eaf172ab02e0962c09011f95
